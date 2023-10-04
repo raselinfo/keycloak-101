@@ -1,9 +1,0 @@
-{
-  "/page": "app/page.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/webinars/page": "app/webinars/page.js",
-  "/unauthorized/page": "app/unauthorized/page.js",
-  "/webinars/create/page": "app/webinars/create/page.js",
-  "/api/webinars/route": "app/api/webinars/route.js",
-  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js"
-}

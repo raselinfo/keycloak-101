@@ -12,7 +12,7 @@ app.use(stringReplace({
 app.use(express.static('.'))
 
 app.get('/', function(req, res) {
-    res.render('index.html');
+    res.render('./index.html');
 });
 
 app.get('/client.js', function(req, res) {
