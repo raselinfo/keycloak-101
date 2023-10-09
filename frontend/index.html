@@ -1,75 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Keycloak Example Application</title>
-    <!-- <script type="text/javascript" src="KC_URL/js/keycloak.js"></script> -->
-    <script type="text/javascript" src="http://localhost:8180/auth/js/keycloak.js"></script>
-    <script type="text/javascript">
-        function output(content) {
-            if (typeof content === 'object') {
-                content = JSON.stringify(content, null, 2)
-            }
-            document.getElementById('output').textContent = content;
-        }
-
-        function profile() {
-            if (kc.idTokenParsed.name) {
-                document.getElementById('name').textContent = 'Hello ' + kc.idTokenParsed.name;
-            } else {
-                document.getElementById('name').textContent = 'Hello ' + kc.idTokenParsed.preferred_username;
-            }
-            if (kc.idTokenParsed.picture) {
-                document.getElementById('picture').src = kc.idTokenParsed.picture;
-            }
-            document.getElementById('user').style.display = 'block';
-        }
-
-        function sendRequest() {
-            var req = new XMLHttpRequest();
-            req.onreadystatechange = function() {
-                if (req.readyState === 4) {
-                    output(req.status + '\n\n' + req.responseText);
-                }
-            }
-            req.open('GET', 'http://localhost:3000/secured', true);
-            req.setRequestHeader('Authorization', 'Bearer ' + kc.token);
-            console.log(kc.token)
-            req.send();
-            console.log(req)
-        }
-
-        var kc = new Keycloak({ realm: 'demo', clientId: 'mydemo',secret:"201b2f63-0ed7-4a35-9f4a-5c433c328b72" });
-        window.onload = function() {
-            kc.init({'messageReceiveTimeout': 100000}).then(function() {
-                if(kc.authenticated) {
-                    profile();
-                } else {
-                    document.getElementById('anonymous').style.display = 'block';
-                }
-            });
-        }
-    </script>
-</head>
-<body>
-<h1>Hello keycloak</h1>
-<div id="anonymous" style="display: block">
-    <button onclick="window.kc.login()">Login</button>
-</div>
-
-<div id="user" style="display: block">
-    <button onclick="window.kc.logout()">Logout</button>
-    <button onclick="output(kc.idTokenParsed)">Show ID Token</button>
-    <button onclick="output(kc.tokenParsed)">Show Access Token</button>
-    <button onclick="window.kc.updateToken(-1).then(function() { output(kc.idTokenParsed); profile() })">Refresh</button>
-    <button onclick="sendRequest()">Invoke Service</button>
-    <hr/>
-    <h2 id="name"></h2>
-    <img id="picture" width="50px" height="50px"/>
-    <hr/>
-    <pre id="output"></pre>
-</div>
-
-
-
-</body>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + React</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
