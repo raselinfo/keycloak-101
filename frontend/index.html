@@ -2,7 +2,8 @@
 <html>
 <head>
     <title>Keycloak Example Application</title>
-    <script type="text/javascript" src="KC_URL/js/keycloak.js"></script>
+    <!-- <script type="text/javascript" src="KC_URL/js/keycloak.js"></script> -->
+    <script type="text/javascript" src="http://localhost:8180/auth/js/keycloak.js"></script>
     <script type="text/javascript">
         function output(content) {
             if (typeof content === 'object') {
@@ -30,12 +31,14 @@
                     output(req.status + '\n\n' + req.responseText);
                 }
             }
-            req.open('GET', 'SERVICE_URL', true);
+            req.open('GET', 'http://localhost:3000/secured', true);
             req.setRequestHeader('Authorization', 'Bearer ' + kc.token);
+            console.log(kc.token)
             req.send();
+            console.log(req)
         }
 
-        var kc = new Keycloak({ realm: 'myrealm', clientId: 'myclient' });
+        var kc = new Keycloak({ realm: 'demo', clientId: 'mydemo',secret:"201b2f63-0ed7-4a35-9f4a-5c433c328b72" });
         window.onload = function() {
             kc.init({'messageReceiveTimeout': 100000}).then(function() {
                 if(kc.authenticated) {
@@ -49,11 +52,11 @@
 </head>
 <body>
 <h1>Hello keycloak</h1>
-<div id="anonymous" style="display: none">
+<div id="anonymous" style="display: block">
     <button onclick="window.kc.login()">Login</button>
 </div>
 
-<div id="user" style="display: none">
+<div id="user" style="display: block">
     <button onclick="window.kc.logout()">Logout</button>
     <button onclick="output(kc.idTokenParsed)">Show ID Token</button>
     <button onclick="output(kc.tokenParsed)">Show Access Token</button>
